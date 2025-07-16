@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <unistd.h>
 
 using namespace std;
@@ -20,9 +21,9 @@ void set_empty_str(char* str, int str_len) {
     }
 }
 
-void cout_finish_text_len(char* f_text, int len) {
+void cout_output_str_by_len(char* str, int len) {
     for (int i = 0; i < len; i++) {
-        cout << f_text[i];
+        cout << str[i];
     }
 }
 
@@ -30,7 +31,7 @@ void show_simbol(char* str, char sim, int str_len) {
     char maybe_sim;
     for (int i = FIRST_SIMBOL; i < LAST_SIMBOL; i++) {
         maybe_sim = i;
-        cout_finish_text_len(str, str_len);
+        cout_output_str_by_len(str, str_len);
         cout << maybe_sim << endl; 
         usleep(25000);
         if (sim == ' ') {
@@ -45,18 +46,22 @@ void show_simbol(char* str, char sim, int str_len) {
 
 
 int main() {
-    char* start_text;
-    int len_of_start_text;
-    char* finish_text;
+    char* input_str;
+    int len_of_input_str = 100;
+    char* output_str;
 
     cout << "Enter some text: ";
-    cin >> start_text;
-    len_of_start_text = get_len(start_text);
-    set_empty_str(finish_text, len_of_start_text);
-    for (int i = 0; i < len_of_start_text+1; i++) {
-        cout_finish_text_len(finish_text, i);
-        show_simbol(finish_text, start_text[i], i);
-        finish_text[i] = start_text[i];
+    fgets(input_str, len_of_input_str, stdin);
+    len_of_input_str = get_len(input_str);
+    set_empty_str(output_str, len_of_input_str);
+    for (int i = 0; i < len_of_input_str-1; i++) {
+        cout_output_str_by_len(output_str, i);
+        show_simbol(output_str, input_str[i], i);
+        output_str[i] = input_str[i];
+    }
+    cout << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << output_str << endl;
     }
 
     return 0;
